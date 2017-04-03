@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const passport = require('passport');
-// const config = require('./app/config/config');
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
@@ -23,7 +22,6 @@ app.use(bodyParser.urlencoded({
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-// app.set('config', config);
 
 require('./app/routes')(app);
 require('./app/api/apis')(router);
