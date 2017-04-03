@@ -76,7 +76,7 @@ spaces.service('SessionService', function ($rootScope) {
 spaces.run(function ($rootScope, SessionService, $state, $mdToast) {
     var theme = localStorage.getItem('theme');
 
-    $rootScope.theme = theme ? theme : 'theme-deep-purple';
+    $rootScope.theme = theme ? theme : 'theme-indigo';
     $rootScope.$state = $state;
 
     $rootScope.$on('$stateChangeStart', function (event, next) {
