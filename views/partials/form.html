@@ -1,0 +1,34 @@
+<div class="container" layout="column" layout-align="center center">
+    <md-card class="form-container">
+        <md-card-content ng-if="!message">
+            <h1 class="form-heading">Fill in the following details</h1>
+            <md-divider style="margin: 4px 0;"></md-divider>
+            <div ng-repeat="(key, field) in space.fields" layout="column" layout-align="center start">
+                <div style="width: 100%;">
+                    <h3 class="form-question">{{$index + 1}}. {{field.name}}</h3>
+                    <div layout="row" layout-align="start center" ng-if="field.type=='file'">
+                        <md-button style="min-width: 40px;" ng-class="theme" class="md-raised mdi mdi-attachment"
+                                   ng-model="file" name="file" ngf-pattern="'*/*'"
+                                   ngf-accept="'*/*'" ngf-max-size="20MB" ngf-min-height="100"
+                                   ngf-select="uploadImage($file, $invalidFiles, key)">
+                        </md-button>
+                        <div style="margin-left: 16px;" ng-if="field.progress < 100">{{field.progress}}% uploaded...
+                        </div>
+                        <div style="margin-left: 16px;">{{field.file}}</div>
+                    </div>
+                    <textarea ng-if="field.type=='text'" class="answer" ng-model="field.answer"
+                              placeholder="Answer here">
+                    </textarea>
+                </div>
+            </div>
+            <div layout-align="center center" layout="row" style="margin-top: 24px;">
+                <md-button ng-class="theme" ng-click="submit()" class="md-raised md-primary">
+                    Submit
+                </md-button>
+            </div>
+        </md-card-content>
+        <md-card-content ng-if="message">
+            <h1 ng-bind="message" style="text-align: center;"></h1>
+        </md-card-content>
+    </md-card>
+</div>

@@ -1,0 +1,131 @@
+<div class="container" layout="column" layout-align="center center">
+    <form class="create-task md-whiteframe-4dp" ng-submit="createSpace()"
+          ng-mousedown="showCreate='create-task-show'" ng-class="showCreate">
+        <div ng-if="!showCreate" layout="row" style="width: 100%; height: 100%;"
+             layout-align="start center">
+            <span class="mdi mdi-plus-circle"></span>
+            <span class="create-task-text">Create a space...</span>
+        </div>
+        <div ng-if="showCreate" flex="100" layout="column" layout-align="space-between">
+            <input style="margin-bottom: 8px;" required ng-model="space.title" md-auto-focus="true"
+                   class="create-task-title"
+                   placeholder="Title">
+            <div layout="row" style="    margin-bottom: 4px;" layout-align="space-between center"
+                 ng-repeat="i in fields">
+                <span>
+                    <span style="margin-right: 4px;">{{$index + 1}}.</span>
+                    <input class="create-task-field" ng-disabled="space.fields[i].done" ng-model="space.fields[i].name"
+                           placeholder="Field Name"/>
+                </span>
+                <div layout="row" layout-align="center center">
+                    <div style="margin-left: 8px;margin-right: 8px; text-transform: capitalize;"
+                         ng-if="space.fields[i].type">:
+                        {{space.fields[i].type}}
+                    </div>
+                    <div layout="row" layout-align="space-between center" ng-class="getWidgetColor(i)"
+                         class="input-widget">
+                        <div ng-if="!space.fields[i].type">
+                            <md-button ng-click="setFieldType(i, 'text')" class="md-icon-button mdi mdi-format-text">
+                                <md-tooltip md-direction="bottom">
+                                    Text
+                                </md-tooltip>
+                            </md-button>
+                            <md-button ng-click="setFieldType(i, 'file')"
+                                       class="md-icon-button mdi mdi-file">
+                                <md-tooltip md-direction="bottom">
+                                    File
+                                </md-tooltip>
+                            </md-button>
+                        </div>
+                        <div ng-if="space.fields[i].type">
+                            <md-button class="md-icon-button mdi mdi-check" ng-if="!space.fields[i].done"
+                                       ng-click="addFieldType(i)">
+                                <md-tooltip md-direction="bottom">
+                                    Done
+                                </md-tooltip>
+                            </md-button>
+                            <md-button ng-click="setFieldType(i, null)" class="md-icon-button mdi mdi-delete">
+                                <md-tooltip md-direction="bottom">
+                                    Delete
+                                </md-tooltip>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="showCreate" class="bottom-bar-right" layout="row" layout-align="center center">
+            <md-datepicker md-hide-icons="triangle" ng-model="space.deadline" md-placeholder="Deadline">
+                <md-tooltip md-direction="bottom">
+                    Deadline
+                </md-tooltip>
+            </md-datepicker>
+            <div class="deadline" ng-if="!space.deadline">Deadline</div>
+            <div class="deadline" ng-if="space.deadline">{{space.deadline | date}}</div>
+        </div>
+        <div ng-if="showCreate" layout="row" class="bottom-bar" layout-align="space-between center">
+            <md-button style="margin-left: auto;" type="submit" class="md-button-mini" ng-disabled="getBtnStatus()">Done</md-button>
+        </div>
+    </form>
+    <div layout="row" layout-wrap layout-align="space-around center" class="spaces-container">
+        <div class="md-whiteframe-2dp task-card" ng-repeat="space in spaces | filter : $root.search">
+            <md-progress-linear md-mode="determinate" class="md-accent"
+                                value="{{getProgress(space)}}"></md-progress-linear>
+            <div class="task-container" ng-click="showSpaceDetail($index, $event)">
+                <div class="task-title" layout="row" layout-align="space-between center">
+                    <div>
+                        {{space.title}}
+                    </div>
+                    <div class="progress">
+                        {{space.progress + '/' + space.noFields}}
+                    </div>
+                </div>
+                <div layout="row" style="margin-bottom: 4px;"
+                     layout-align="space-between center"
+                     ng-repeat="field in space.fields">
+                        <span ng-class="field.answer || field.file ? 'line-through':''">
+                            <span>{{$index + 1}}.</span>
+                            <span>{{field.name}}</span>
+                        </span>
+                </div>
+            </div>
+            <div layout="row" class="task-card-action" layout-align="space-between center"
+                 style="width: 100%;padding-left: 16px;">
+                <div style="font-size: 12px; opacity: 0.8;">
+                    Deadline: {{space.deadline ? (space.deadline | date) : '--'}}
+                </div>
+                <div layout="row">
+                    <md-menu>
+                        <md-button class="md-icon-button icon-dark mdi mdi-download" ng-click="$mdMenu.open($event)">
+                            <md-tooltip md-direction="bottom">
+                                Download
+                            </md-tooltip>
+                        </md-button>
+                        <md-menu-content width="2">
+                            <md-menu-item>
+                                <md-button ng-click="download(space, 'csv')">
+                                    CSV
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="download(space, 'json')">
+                                    JSON
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-button ng-click="share($index, $event)" class="md-icon-button icon-dark mdi mdi-share-variant">
+                        <md-tooltip md-direction="bottom">
+                            Share
+                        </md-tooltip>
+                    </md-button>
+                    <md-button ng-click="archive($index, $event)" class="md-icon-button icon-dark mdi mdi-archive">
+                        <md-tooltip md-direction="bottom">
+                            Archive
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

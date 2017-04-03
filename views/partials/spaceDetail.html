@@ -1,0 +1,29 @@
+<md-dialog class="custom-dialog">
+    <div layout="row" layout-align="space-between center">
+        <h2 style="margin-top: 0;">{{space.title}}</h2>
+    </div>
+    <div class="heading">Fields</div>
+    <div layout="column" style="margin-bottom: 12px;" ng-repeat="field in space.fields">
+        <div layout="row" layout-align="space-between center">
+            <div ng-class="field.answer || field.file ? 'line-through':''">
+                <span>{{$index + 1}}.</span>
+                <span>{{field.name}}</span>
+            </div>
+            <div style="font-size: 12px;" ng-if="field.answer || field.file"
+                 ng-click="field.viewAnswer = !field.viewAnswer">
+                View <span ng-show="field.type=='text'">Answer</span> <span ng-show="field.type=='file'">File</span>
+                <span class="mdi mdi-chevron-down"></span>
+            </div>
+        </div>
+        <div class="answer-text" ng-if="field.type=='text' && field.answer && field.viewAnswer"
+             style="margin-top: 4px;">
+            {{field.answer}}
+        </div>
+        <div ng-if="field.type=='file' && field.file && field.viewAnswer" style="margin-top: 4px;">
+            <a ng-href="/files/{{field.file}}" target="_blank" alt="">{{field.file}}</a>
+        </div>
+    </div>
+    <div layout-align="start center" layout="row" style="margin-top: 30px;">
+        <md-button class="md-primary md-raised" ng-click="done()">Done</md-button>
+    </div>
+</md-dialog>

@@ -1,0 +1,27 @@
+{
+  "name": "noonic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yashrajchhabra@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.3.0",
+    "body-parser": "^1.16.0",
+    "connect-multiparty": "^2.0.0",
+    "cron": "^1.2.1",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "jsonwebtoken": "^7.3.0",
+    "morgan": "^1.7.0",
+    "nodemailer": "^3.1.8",
+    "passport": "^0.3.2",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.1"
+  }
+}

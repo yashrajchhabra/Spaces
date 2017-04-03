@@ -1,0 +1,20 @@
+<md-dialog class="custom-dialog">
+    <div layout="row" layout-align="space-between center">
+        <div>Share via link</div>
+    </div>
+    <div layout="column" layout-gt-xs="row" layout-align="center center">
+        <div class="share-link">{{getShareUrl()}}</div>
+        <md-button style="margin-left: 8px;" class="md-primary" ng-click-copy="{{getShareUrl()}}" ng-click="copy()">Copy Link</md-button>
+    </div>
+    <div layout="column" style="margin-top: 30px;">
+        <div>Share via email</div>
+        <div style="margin-top: 4px;" ng-repeat="email in space.sharedWith">{{$index + 1}}. {{email}}</div>
+        <form layout="row" layout-align="space-between center" ng-submit="shareSpace(email)">
+            <input class="input-email" required type="email" ng-model="email" placeholder=" email address">
+            <md-button style="margin-left: 8px;" class="md-primary" type="submit">Share</md-button>
+        </form>
+    </div>
+    <div layout-align="start center" layout="row" style="margin-top: 30px;">
+        <md-button class="md-primary md-raised" ng-click="done()">Done</md-button>
+    </div>
+</md-dialog>

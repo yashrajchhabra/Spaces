@@ -1,0 +1,73 @@
+<html lang="en" ng-app="spaces">
+<head>
+    <title>Spaces</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no"/>
+    <meta name="theme-color" content="#3f51b5">
+    <link rel="manifest" href="/manifest.json">
+    <link href="/bower_components/mdi/css/materialdesignicons.css" rel="stylesheet">
+    <link href="/bower_components/angular-material/angular-material.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <base href="/">
+</head>
+<body ng-cloak class="md-primary" ng-class="theme">
+<div class="loader">
+    <div style="height:100%;" layout="row" layout-align="center center">
+        <div class="logo logo-loader" style="transform: rotate(-45deg);">
+        </div>
+        <div class="logo-text-loader">
+            SPACES
+        </div>
+    </div>
+</div>
+<div ng-controller="navController" style="position: fixed; width: 100%; z-index: 100;">
+    <md-toolbar ng-if="!($state.current.name == 'auth')" class="md-primary">
+        <div class="md-toolbar-tools">
+            <div class="logo">
+            </div>
+            <a class="logo-text" ui-sref="dashboard" flex="100" flex-gt-xs="20" md-truncate>
+                SPACES
+            </a>
+            <div ng-if="!($state.current.name == 'form')" hide-xs class="search-bar"
+                 ng-class="searchActive ? 'search-bar-active md-whiteframe-2dp' : ''" flex
+                 layout-align="start center" layout="row">
+                <div class="mdi mdi-magnify"></div>
+                <input type="text" ng-mousedown="searchActive=true" ng-mouseleave="searchActive=false"
+                       class="search-input" placeholder="Search" ng-model="$root.search">
+            </div>
+            <md-menu hide-xs ng-if="!($state.current.name == 'form')" md-position-mode="target-right target">
+                <div class="color md-icon-button" ng-class="theme" md-ink-ripple ng-click="$mdMenu.open($event)">
+                </div>
+                <md-menu-content width="3">
+                    <md-menu-item ng-repeat="theme in themes">
+                        <md-button ng-click="setTheme(theme)">
+                            <div layout="row" flex>
+                                <p flex>{{theme.name}}</p>
+                                <div class="color" ng-class="theme.class"></div>
+                            </div>
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <a ng-if="isLoggedIn && !($state.current.name == 'form')" ng-click="logout()">
+                <md-button aria-label="Logout">
+                    Logout
+                </md-button>
+            </a>
+        </div>
+    </md-toolbar>
+</div>
+<div ui-view>
+
+</div>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="/bower_components/angular-material/angular-material.js"></script>
+<script src="/bower_components/angular-jwt/dist/angular-jwt.js"></script>
+<script src="/js/angular/app.js"></script>
+
+</body>
+</html>
